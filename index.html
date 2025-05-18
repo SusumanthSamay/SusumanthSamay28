@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samay Susumanth Portfolio</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon1.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <style>
+        body {
+            scroll-behavior: smooth;
+            font-family: 'Arial', sans-serif;
+            background-color: #EEEEEE; /* Light gray for body background */
+        }
+         footer {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: auto;
+    }
+
+    .footer-icon {
+      width: 30px;
+      height: 30px;
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+        .navbar {
+            background-color: #222831; /* Dark gray for navbar */
+        }
+        .section-title {
+            border-bottom: 2px solid #00ADB5; /* Vibrant teal for section titles */
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+        .blue-icon {
+            color: #00ADB5; /* Vibrant teal for icons */
+        }
+        .service-card, .portfolio-card {
+            background-color: #393E46; /* Medium gray for cards */
+            color: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+        .service-card:hover, .portfolio-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background-color: #00ADB5; /* Vibrant teal on hover */
+        }
+        .portfolio-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
+            transition: transform 0.3s ease;
+        }
+        .portfolio-card img:hover {
+            transform: scale(1.1);
+        }
+        /* Profile Image and Details */
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            background-color: #393E46; /* Medium gray for profile img placeholder */
+            border-radius: 50%; /* Circular image */
+            border: 3px solid #00ADB5; /* Accent border */
+            margin-bottom: 1rem;
+        }
+        .profile-details {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .profile-details .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .profile-details strong {
+            color: #222831;
+            font-weight: 600;
+        }
+        /* Skills Section */
+        .skills-card {
+            background-color: #393E46;
+            padding: 1rem;
+            border-radius: 8px;
+            color: white;
+            margin-top: 1rem;
+        }
+        .skills-card h3 {
+            color: #00ADB5;
+            margin-bottom: 1rem;
+        }
+        /* Description Area */
+        .description-card {
+            background-color: #EEEEEE;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #00ADB5;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .description-card h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #222831;
+            margin-bottom: 1rem;
+        }
+        #home {
+            background-image: url('Dream\ The\ Immpossible.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .timeline {
+            position: relative;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 1rem;
+            height: 100%;
+            width: 4px;
+            background: #00ADB5; /* Vibrant teal for timeline line */
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 2.5rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: #00ADB5; /* Vibrant teal for timeline dots */
+            border-radius: 50%;
+        }
+        footer {
+            background-color: #222831; /* Dark gray for footer */
+            color: white;
+        }
+        footer a:hover .blue-icon {
+            color: #EEEEEE; /* Light gray on hover for footer icons */
+        }
+        /* Contact Section Specific Styles */
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .contact-form input, .contact-form textarea {
+            background-color: #EEEEEE; /* Light gray for form inputs */
+            border: 1px solid #393E46; /* Medium gray for borders */
+            transition: border-color 0.3s ease;
+        }
+        .contact-form input:focus, .contact-form textarea:focus {
+            outline: none;
+            border-color: #00ADB5; /* Vibrant teal on focus */
+        }
+        .contact-form .input-wrapper {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .contact-form .input-wrapper span {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00ADB5; /* Vibrant teal for form icons */
+        }
+        .contact-form input, .contact-form textarea {
+            padding-left: 2.5rem;
+        }
+        /* Skills Section Specific Styles */
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .skill-item .progress-bar {
+            flex-grow: 1;
+            background-color: #222831; /* Darker gray for progress bar background */
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .skill-item .progress-bar span {
+            display: block;
+            height: 100%;
+            background-color: #00ADB5; /* Vibrant teal for progress bars */
+            transition: width 0.5s ease-in-out;
+        }
+        /* Responsive Styles */
+        @media (max-width: 640px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .navbar .space-x-4 {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+            #home h1 {
+                font-size: 2.5rem;
+            }
+            #home p {
+                font-size: 1.25rem;
+            }
+            .section-title {
+                font-size: 1.75rem;
+            }
+            .profile-img {
+                width: 120px;
+                height: 120px;
+            }
+            .timeline::before {
+                left: 0.5rem;
+            }
+            .timeline-item {
+                padding-left: 1.5rem;
+            }
+            .timeline-item::before {
+                left: 0;
+            }
+            .service-card, .portfolio-card {
+                padding: 1rem;
+            }
+            .service-card h3, .portfolio-card h3 {
+                font-size: 1.25rem;
+            }
+            .portfolio-card img {
+                height: 120px;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .contact-form {
+                padding: 0 1rem;
+            }
+            footer .space-x-6 {
+                gap: 1rem;
+            }
+            .profile-details {
+                text-align: center;
+            }
+        }
+        @media (max-width: 768px) {
+            .about-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .about-section .md\\:w-1\\/3, .about-section .md\\:w-2\\/3 {
+                width: 100%;
+            }
+            .resume-section {
+                flex-direction: column;
+            }
+            .resume-section .md\\:w-1\\/2 {
+                width: 100%;
+            }
+            .services-grid, .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-section {
+                flex-direction: column;
+            }
+            .contact-section .md\\:w-1\\/2 {
+                width: 100%;
+            }
+            .contact-section iframe {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 w-full p-4 z-50">
+        <div class="container mx-auto flex flex-wrap justify-between items-center">
+            <a href="#home" class="text-2xl font-bold text-white">Samay Susumanth</a>
+            <div class="space-x-4 flex flex-wrap">
+                <a href="#home" class="text-white hover:text-[#00ADB5]">Home</a>
+                <a href="#about" class="text-white hover:text-[#00ADB5]">About</a>
+                <a href="#resume" class="text-white hover:text-[#00ADB5]">Resume</a>
+                <a href="#services" class="text-white hover:text-[#00ADB5]">Services</a>
+                <a href="#portfolio" class="text-white hover:text-[#00ADB5]">Portfolio</a>
+                <a href="#contact" class="text-white hover:text-[#00ADB5]">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center text-white">
+        <div class="text-center px-4">
+            <h1 class="text-5xl font-bold mb-4">I am "Samay Susumanth"</h1>
+            <p class="text-2xl"><span id="role" class="font-semibold"></span></p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-4 section-title text-center">About Me</h2>
+            <div class="about-section flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/3 flex flex-col items-center">
+                    <div class="profile-details w-full">
+                        <div class="flex justify-center">
+                            <img src="ChatGPT Image May 17, 2025, 07_38_19 PM.png" alt="Samay Susumanth" class="profile-img" />
+                        </div>
+                        <div class="detail-item">
+                            <span class="blue-icon text-lg">👤</span>
+                            <p><strong>Name:</strong> <span class="text-gray-600">Samay Susumanth</span></p>
+                        </div>
+                        <div class="detail-item">
+                            <span class="blue-icon text-lg">💼</span>
+                            <p><strong>Profile:</strong> <span class="text-gray-600">Software Developer</span></p>
+                        </div>
+                        <div class="detail-item">
+                            <span class="blue-icon text-lg">✉️</span>
+                            <p><strong>Email:</strong> <span class="text-gray-600">samaysusumanth2@gmail.com</span></p>
+                        </div>
+                        <div class="detail-item">
+                            <span class="blue-icon text-lg">📞</span>
+                            <p><strong>Phone:</strong> <span class="text-gray-600">+91 8985678373</span></p>
+                        </div>
+                    </div>
+                    <div class="skills-card w-full">
+                        <h3 class="text-xl font-semibold mb-2">Skills</h3>
+                        <div class="w-full">
+                            <div class="skill-item">
+                                <span class="blue-icon text-lg">☕</span>
+                                <span>Java</span>
+                                <div class="progress-bar"><span style="width: 95%"></span></div>
+                            </div>
+                            <div class="skill-item">
+                                <span class="blue-icon text-lg">🗄️</span>
+                                <span>MySQL</span>
+                                <div class="progress-bar"><span style="width: 100%"></span></div>
+                            </div>
+                            <div class="skill-item">
+                                <span class="blue-icon text-lg">🌐</span>
+                                <span>HTML</span>
+                                <div class="progress-bar"><span style="width: 100%"></span></div>
+                            </div>
+                            <div class="skill-item">
+                                <span class="blue-icon text-lg">🎨</span>
+                                <span>CSS</span>
+                                <div class="progress-bar"><span style="width: 80%"></span></div>
+                            </div>
+                            <div class="skill-item">
+                                <span class="blue-icon text-lg">📜</span>
+                                <span>JavaScript</span>
+                                <div class="progress-bar"><span style="width: 80%"></span></div>
+                            </div>
+                            <div class="skill-item">
+                                <span class="blue-icon text-lg">🌱</span>
+                                <span>Spring Boot</span>
+                                <div class="progress-bar"><span style="width: 80%"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-2/3">
+                    <div class="description-card">
+                        <h3>About Me</h3>
+                       <!-- <p class="text-gray-600">Passionate about Software Development, with a Bachelor's in Computer Science and hands-on experience in Java, Spring Boot, JavaScript, and MySQL. Enhanced scalable applications, including an Hospital Management Application, emotion-based feedback analysis system, and an e-book platform. Certified in Meta Front-End Development and Spring Boot REST APIs. Eager to leverage technical expertise and problem-solving skills to contribute to innovative software solutions.</p>
+                    --> <p class="text-gray-600">Passionate and results-driven Software Developer with a Bachelor's degree in Computer Science Engineering, bringing hands-on experience in full-stack application development and a strong foundation in core computer science principles. <br><br>Proficient in Java, Spring Boot, JavaScript, React, HTML/CSS, and MySQL, with a deep understanding of Object-Oriented Programming (OOP), RESTful API development, and software design patterns.<br><br>
+
+                        Successfully led and contributed to multiple scalable projects including a Hospital Management System, Emotion-Based Feedback Analysis System, and an E-Book Zone platform. These projects highlight capabilities in real-time CRUD operations, data processing, integration of frontend-backend technologies, and user-centric design.<br><br>
+
+                        Certified in Meta Front-End Development (Coursera) and Spring Boot REST APIs, and completed an internship at KodNest, gaining practical, real-world experience in Java development, MySQL database design, API testing, and manual testing methodologies.<br><br>
+
+                        Strong problem-solving mindset with a focus on writing clean, efficient, and maintainable code. Adept at working in collaborative, agile-driven teams, with excellent communication skills and the ability to quickly learn and apply new technologies.<br><br><br>
+
+                        Actively exploring areas like Spring Security, and Cloud deployment, with the goal of becoming a proficient full-stack engineer. Eager to contribute to innovative, high-impact software solutions in a challenging and growth-oriented environment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section id="resume" class="py-16 bg-[#393E46]">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-4 section-title text-center text-white">Resume</h2>
+            <div class="text-center mb-8">
+                <a href="SusumanthSamayResume.pdf" download class="bg-[#00ADB5] text-white px-6 py-2 rounded hover:bg-[#222831]">Download Resume</a>
+            </div>
+            <div class="resume-section flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2 timeline">
+                    <div class="timeline-item mb-6">
+                        <h3 class="text-xl font-semibold mb-2 text-white">Summary</h3>
+                        <p class="text-gray-300">Passionate Software Developer with a Bachelor’s in Computer Science and hands-on experience in Java, Spring Boot, JavaScript, and MySQL. Enhanced scalable applications, including a Hospital Management Application, emotion-based feedback analysis system, and an e-book platform.</p>
+                        <p class="text-gray-300"><strong>Location:</strong> Bangalore, Karnataka</p>
+                        <p class="text-gray-300"><strong>Email:</strong> samaysusumanth2@gmail.com</p>
+                        <p class="text-gray-300"><strong>Phone:</strong> +91 8985678373</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3 class="text-xl font-semibold mb-2 text-white">Education</h3>
+                        <p class="text-gray-300"><strong>Bachelor of Technology in Computer Science</strong></p>
+                        <p class="text-gray-300">Santhiram Engineering College, Nandyal, AP (Nov 2021 - May 2024)</p>
+                        <p class="text-gray-300">CGPA: 8.03/10</p>
+                        <p class="text-gray-300"><strong>Diploma in Mechanical Engineering</strong></p>
+                        <p class="text-gray-300">E. S. C Government Polytechnic, Nandyal, AP (Jun 2018 - May 2021)</p>
+                        <p class="text-gray-300">GPA: 75.6/100</p>
+                        <p class="text-gray-300"><strong>Secondary School Certificate (SSC)</strong></p>
+                        <p class="text-gray-300">Little Angels E.M High School (Jun 2017 - Apr 2018)</p>
+                        <p class="text-gray-300">GPA: 9.5/10</p>
+                    </div>
+                </div>
+                <div class="md:w-1/2 timeline">
+                    <div class="timeline-item mb-6">
+                        <h3 class="text-xl font-semibold mb-2 text-white">Professional Experience</h3>
+                        <p class="text-gray-300"><strong>Software Development Intern, KodNest (Feb 2024 - Oct 2024)</strong></p>
+                        <ul class="list-disc ml-6 text-gray-300">
+                            <li>Developed Java-based applications using Spring Boot and MySQL.</li>
+                            <li>Gained hands-on experience in frontend development using JavaScript, HTML, and CSS to build responsive user interfaces.</li>
+                            <li>Contributed to real-world projects under the guidance of industry professionals, enhancing practical knowledge in full-stack development and software testing.</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-item">
+                        <h3 class="text-xl font-semibold mb-2 text-white">Certifications</h3>
+                        <p class="text-gray-300">Meta Front-End Developer, Coursera (Mar 2024)</p>
+                        <p class="text-gray-300">Spring Boot: REST APIs & Microservices, Udemy (Nov 2024)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 bg-[#393E46]">
+        <div class="container mx-auto text-center px-4">
+            <h2 class="text-3xl font-bold mb-4 section-title text-white">Services</h2>
+            <div class="services-grid grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+                <div class="p-6 border rounded-lg shadow-lg service-card">
+                    <div class="flex justify-center mb-4">
+                        <span class="blue-icon text-4xl">💻</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Java Development</h3>
+                    <p>Building robust backend applications using Java, Spring Boot, and Hibernate.</p>
+                </div>
+                <div class="p-6 border rounded-lg shadow-lg service-card">
+                    <div class="flex justify-center mb-4">
+                        <span class="blue-icon text-4xl">🌐</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Full-Stack Development</h3>
+                    <p>Creating responsive web applications with React, JavaScript, HTML, and CSS.</p>
+                </div>
+                <div class="p-6 border rounded-lg shadow-lg service-card">
+                    <div class="flex justify-center mb-4">
+                        <span class="blue-icon text-4xl">🗄️</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Database Management</h3>
+                    <p>Designing and managing databases with MySQL for efficient data handling.</p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-16">
+        <div class="container mx-auto text-center px-4">
+            <h2 class="text-3xl font-bold mb-4 section-title">Portfolio</h2>
+            <div class="portfolio-grid grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+                <div class="portfolio-card border rounded-lg shadow-lg overflow-hidden">
+                    <img src="hms.jpeg" alt="Hospital Management System">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2">
+                            <a href="/hospital-management-system" class="text-white hover:underline">Hospital Management System</a>
+                        </h3>
+                        <p>A web-based system for managing patient records, doctor schedules, and appointments efficiently using Java, Spring Boot, MySQL, and REST APIs.</p>
+                    </div>
+                </div>
+                <div class="portfolio-card border rounded-lg shadow-lg overflow-hidden">
+                    <img src="bookzone.jpeg" alt="E-Book Zone">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2">
+                            <a href="/e-book-zone" class="text-white hover:underline">E-Book Zone</a>
+                        </h3>
+                        <p>A responsive e-book platform with dynamic search filters, built using HTML, CSS, JavaScript, and Bootstrap.</p>
+                    </div>
+                </div>
+                <div class="portfolio-card border rounded-lg shadow-lg overflow-hidden">
+                    <img src="elearning.jpeg" alt="Emotion-Based Feedback Analysis">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2">
+                            <a href="/emotion-feedback-system" class="text-white hover:underline">Emotion-Based Feedback Analysis</a>
+                        </h3>
+                        <p>A real-time emotion classification system for E-learning, using Python, CNN, and MySQL.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-[#393E46]">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-4 section-title text-center text-white">Get in Touch</h2>
+            <div class="contact-section flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2">
+                    <h3 class="text-xl font-semibold mb-4 text-white">Contact Information</h3>
+                    <div class="contact-info-item">
+                        <span class="blue-icon text-2xl">📍</span>
+                        <p class="text-gray-300">Bangalore, Karnataka</p>
+                    </div>
+                    <div class="contact-info-item">
+                        <span class="blue-icon text-2xl">📞</span>
+                        <p class="text-gray-300">+91 8985678373</p>
+                    </div>
+                    <div class="contact-info-item">
+                        <span class="blue-icon text-2xl">✉️</span>
+                        <p class="text-gray-300">samaysusumanth2@gmail.com</p>
+                    </div>
+                    <div class="mt-6">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248849.886436062!2d77.46612667214974!3d12.953997022847155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfcfe367f7b463!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1697891234567!5m2!1sen!2sin" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="contact-form max-w-lg mx-auto">
+                        <div class="input-wrapper">
+                            <span>👤</span>
+                            <input type="text" placeholder="Your Name" class="w-full p-2 rounded">
+                        </div>
+                        <div class="input-wrapper">
+                            <span>✉️</span>
+                            <input type="email" placeholder="Your Email" class="w-full p-2 rounded">
+                        </div>
+                        <div class="input-wrapper">
+                            <span>📜</span>
+                            <input type="text" placeholder="Subject" class="w-full p-2 rounded">
+                        </div>
+                        <div class="input-wrapper">
+                            <span>💬</span>
+                            <textarea placeholder="Message" class="w-full p-2 rounded" rows="4"></textarea>
+                        </div>
+                        <button class="bg-[#00ADB5] text-white px-6 py-2 rounded hover:bg-[#222831] w-full">Send Message</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+     <footer>
+    <p>Connect with us:</p>
+  </footer>
+    <footer class="py-8 text-center">
+        <div class="flex justify-center space-x-6 mb-4 flex-wrap">
+            <a href="https://www.linkedin.com/in/susumanth" target="www.linkedin.com/in/susumanth"><span class="blue-icon text-2xl"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" class="footer-icon"></span></a>
+            <a href="https://github.com/SusumanthSamay" target="https://github.com/SusumanthSamay"><span class="blue-icon text-2xl"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" class="footer-icon"></span></a>
+            <a href="https://www.facebook.com/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" class="footer-icon"></a>
+            <a href="mailto:samaysusumanth2@gmail.com"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email" class="footer-icon"></a>
+
+        </div>
+        <p>© 2025 Samay Susumanth. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const roles = ["Software Developer", "Backend Developer", "Full Stack Developer"];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const roleElement = document.getElementById("role");
+
+        function typeRole() {
+            const currentRole = roles[roleIndex];
+            if (isDeleting) {
+                roleElement.textContent = currentRole.substring(0, charIndex--);
+                if (charIndex < 0) {
+                    isDeleting = false;
+                    roleIndex = (roleIndex + 1) % roles.length;
+                    setTimeout(typeRole, 500);
+                } else {
+                    setTimeout(typeRole, 50);
+                }
+            } else {
+                roleElement.textContent = currentRole.substring(0, charIndex++);
+                if (charIndex > currentRole.length) {
+                    isDeleting = true;
+                    setTimeout(typeRole, 1500);
+                } else {
+                    setTimeout(typeRole, 100);
+                }
+            }
+        }
+
+        typeRole();
+    </script>
+</body>
+</html>

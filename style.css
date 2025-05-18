@@ -1,0 +1,178 @@
+/* Background */
+.background {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('racing-car-night-speed-desktop-wallpaper1.jpg') no-repeat center center/cover;
+  filter: brightness(0.7);
+  z-index: -1;
+}
+
+/* Basic reset */
+body {
+  margin: 0; padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #f0f0f0;
+  background: #222;
+}
+
+/* Container */
+.container {
+  max-width: 1100px;
+  margin: 60px auto 40px auto;
+  padding: 0 20px;
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-top: 50px;
+}
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  object-fit: cover;
+  margin-bottom: 15px;
+  box-shadow: 0 0 10px #0af;
+  transition: transform 0.4s ease;
+}
+.profile-pic:hover {
+  transform: scale(1.1);
+}
+header h1 {
+  font-size: 2.8rem;
+  margin-bottom: 8px;
+}
+header p {
+  font-size: 1.2rem;
+  color: #ddd;
+}
+
+/* Section titles */
+h2 {
+  font-size: 2rem;
+  border-bottom: 2px solid #0af;
+  padding-bottom: 6px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Skills */
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+.skill-item {
+  background: rgba(0,0,0,0.4);
+  padding: 10px 18px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+  cursor: default;
+}
+.skill-item:hover {
+  background: #0af;
+  color: #111;
+}
+
+/* Projects grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap: 25px;
+}
+.project-card {
+  background: rgba(0,0,0,0.5);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+  cursor: pointer;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px #0af;
+}
+.project-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.project-card:hover img {
+  transform: scale(1.1);
+}
+.project-card h3 {
+  margin: 15px 20px 10px 20px;
+}
+.project-card p {
+  margin: 0 20px 20px 20px;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+/* Resume section */
+#resume p {
+  max-width: 500px;
+  margin: 8px auto;
+  font-size: 1rem;
+}
+#resume a.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 10px;
+  background: #0af;
+  color: #111;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: background 0.3s ease;
+}
+#resume a.btn:hover {
+  background: #06c;
+}
+
+/* Contact section */
+#contact {
+  text-align: center;
+}
+#contact p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+.map-container {
+  max-width: 700px;
+  margin: 0 auto;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px 10px;
+  background: #111;
+  color: #777;
+  font-size: 0.9rem;
+  margin-top: 60px;
+}
+
+/* Responsive */
+@media(max-width: 600px) {
+  .skills-list {
+    flex-direction: column;
+    align-items: center;
+  }
+  header h1 {
+    font-size: 2rem;
+  }
+  .project-card img {
+    height: 140px;
+  }
+}
