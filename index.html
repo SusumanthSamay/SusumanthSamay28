@@ -3,52 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Samay Susumanth</title>
+    <title>Samay Susumanth Portfolio</title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon1.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <style>
+        :root {
+            --bg-color: #EEEEEE;
+            --text-color: #222831;
+            --primary-color: #00ADB5;
+            --accent-color: #393E46;
+            --card-bg: #393E46;
+            --card-text: #FFFFFF;
+            --navbar-bg: #222831;
+            --footer-bg: #222831;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1A1A1A;
+            --text-color: #FFFFFF;
+            --primary-color: #94B4C1;
+            --accent-color: #547792;
+            --card-bg: #2A2A2A;
+            --card-text: #FFFFFF;
+            --navbar-bg: #1A1A1A;
+            --footer-bg: #1A1A1A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             scroll-behavior: smooth;
             font-family: 'Arial', sans-serif;
-            background-color: #EEEEEE; /* Light gray for body background */
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            position: relative;
+            overflow-x: hidden;
         }
-         footer {
-      background-color: #222;
-      color: white;
-      text-align: center;
-      padding: 20px 0;
-      margin-top: auto;
-    }
 
-    .footer-icon {
-      width: 30px;
-      height: 30px;
-      vertical-align: middle;
-      margin: 0 10px;
-    }
-        .navbar {
-            background-color: #222831; /* Dark gray for navbar */
+        /* Cursor Animation */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease, border-color 0.3s ease;
         }
+
+        .custom-cursor.hovered {
+            transform: translate(-50%, -50%) scale(1.5);
+            border-color: var(--accent-color);
+            background-color: rgba(var(--primary-color-rgb, 0, 173, 181), 0.2);
+        }
+
+        [data-theme="dark"] .custom-cursor {
+            box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        [data-theme="dark"] .custom-cursor.hovered {
+            box-shadow: 0 0 15px var(--accent-color), 0 0 30px var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        /* Toggle Button Styles */
+        .theme-toggle-container {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background-color: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .theme-toggle-container[data-theme="dark"] {
+            background-color: #1A1A1A;
+        }
+
+        .theme-toggle-container .sun-icon,
+        .theme-toggle-container .moon-icon {
+            font-size: 1.2rem;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .theme-toggle-container[data-theme="light"] .sun-icon {
+            color: #007bff;
+        }
+
+        .theme-toggle-container[data-theme="dark"] .moon-icon {
+            color: #007bff;
+        }
+
+        .theme-toggle-slider {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background-color: #007bff;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle-container[data-theme="dark"] .theme-toggle-slider {
+            transform: translateX(30px);
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--navbar-bg);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+            padding: 1rem 0;
+        }
+
+        /* Existing Styles with Theme Support */
         .section-title {
-            border-bottom: 2px solid #00ADB5; /* Vibrant teal for section titles */
+            border-bottom: 2px solid var(--primary-color);
             display: inline-block;
             padding-bottom: 0.5rem;
         }
+
         .blue-icon {
-            color: #00ADB5; /* Vibrant teal for icons */
+            color: var(--primary-color);
         }
+
         .service-card, .portfolio-card {
-            background-color: #393E46; /* Medium gray for cards */
-            color: white;
+            background-color: var(--card-bg);
+            color: var(--card-text);
             transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
         }
+
         .service-card:hover, .portfolio-card:hover {
             transform: scale(1.05);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            background-color: #00ADB5; /* Vibrant teal on hover */
+            background-color: var(--primary-color);
         }
+
+        [data-theme="dark"] .service-card:hover, [data-theme="dark"] .portfolio-card:hover {
+            box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+            background-color: var(--accent-color);
+        }
+
         .portfolio-card img {
             width: 100%;
             height: 150px;
@@ -56,71 +169,89 @@
             border-radius: 8px 8px 0 0;
             transition: transform 0.3s ease;
         }
+
         .portfolio-card img:hover {
             transform: scale(1.1);
         }
-        /* Profile Image and Details */
+
         .profile-img {
             width: 150px;
             height: 150px;
-            background-color: #393E46; /* Medium gray for profile img placeholder */
-            border-radius: 50%; /* Circular image */
-            border: 3px solid #00ADB5; /* Accent border */
+            background-color: var(--card-bg);
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
             margin-bottom: 1rem;
         }
+
         .profile-details {
-            background-color: white;
+            background-color: var(--bg-color);
             padding: 1.5rem;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             text-align: left;
         }
+
         .profile-details .detail-item {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             margin-bottom: 0.75rem;
         }
+
         .profile-details strong {
-            color: #222831;
+            color: var(--text-color);
             font-weight: 600;
         }
-        /* Skills Section */
+
         .skills-card {
-            background-color: #393E46;
+            background-color: var(--card-bg);
             padding: 1rem;
             border-radius: 8px;
-            color: white;
+            color: var(--card-text);
             margin-top: 1rem;
         }
+
         .skills-card h3 {
-            color: #00ADB5;
+            color: var(--primary-color);
             margin-bottom: 1rem;
         }
-        /* Description Area */
+
         .description-card {
-            background-color: #EEEEEE;
+            background-color: var(--bg-color);
             padding: 1.5rem;
             border-radius: 8px;
-            border: 1px solid #00ADB5;
+            border: 1px solid var(--primary-color);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
+
         .description-card h3 {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #222831;
+            color: var(--text-color);
             margin-bottom: 1rem;
         }
+
+        /* Keep About Me text gray in light mode, lighter in dark mode */
+        .description-card p {
+            color: #4B5563; /* text-gray-600 */
+        }
+
+        [data-theme="dark"] .description-card p {
+            color: #D1D5DB; /* Lighter gray for dark mode */
+        }
+
         #home {
-            background-image: url('Dream\ The\ Immpossible.png');
+            background-image: url('Dream The Immpossible.png');
             background-size: cover;
             background-position: center;
         }
+
         .timeline {
             position: relative;
             padding: 1rem;
             border-radius: 8px;
         }
+
         .timeline::before {
             content: '';
             position: absolute;
@@ -128,12 +259,14 @@
             left: 1rem;
             height: 100%;
             width: 4px;
-            background: #00ADB5; /* Vibrant teal for timeline line */
+            background: var(--primary-color);
         }
+
         .timeline-item {
             position: relative;
             padding-left: 2.5rem;
         }
+
         .timeline-item::before {
             content: '';
             position: absolute;
@@ -141,66 +274,99 @@
             top: 0;
             width: 16px;
             height: 16px;
-            background: #00ADB5; /* Vibrant teal for timeline dots */
+            background: var(--primary-color);
             border-radius: 50%;
         }
+
         footer {
-            background-color: #222831; /* Dark gray for footer */
-            color: white;
+            background-color: var(--footer-bg);
+            color: var(--card-text);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: auto;
         }
+
+        .footer-icon {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            margin: 0 8px;
+        }
+
         footer a:hover .blue-icon {
-            color: #EEEEEE; /* Light gray on hover for footer icons */
+            color: var(--bg-color);
         }
-        /* Contact Section Specific Styles */
+
+        [data-theme="dark"] footer a:hover .blue-icon {
+            text-shadow: 0 0 5px var(--primary-color);
+        }
+
         .contact-info-item {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             margin-bottom: 1rem;
         }
+
         .contact-form input, .contact-form textarea {
-            background-color: #EEEEEE; /* Light gray for form inputs */
-            border: 1px solid #393E46; /* Medium gray for borders */
+            background-color: var(--bg-color);
+            border: 1px solid var(--accent-color);
             transition: border-color 0.3s ease;
         }
+
         .contact-form input:focus, .contact-form textarea:focus {
             outline: none;
-            border-color: #00ADB5; /* Vibrant teal on focus */
+            border-color: var(--primary-color);
         }
+
         .contact-form .input-wrapper {
             position: relative;
             margin-bottom: 1rem;
         }
+
         .contact-form .input-wrapper span {
             position: absolute;
             left: 0.75rem;
             top: 50%;
             transform: translateY(-50%);
-            color: #00ADB5; /* Vibrant teal for form icons */
+            color: var(--primary-color);
         }
+
         .contact-form input, .contact-form textarea {
             padding-left: 2.5rem;
         }
-        /* Skills Section Specific Styles */
+
         .skill-item {
             display: flex;
             align-items: center;
             gap: 0.75rem;
             margin-bottom: 1rem;
         }
+
         .skill-item .progress-bar {
             flex-grow: 1;
-            background-color: #222831; /* Darker gray for progress bar background */
+            background-color: var(--text-color);
             height: 8px;
             border-radius: 4px;
             overflow: hidden;
         }
+
         .skill-item .progress-bar span {
             display: block;
             height: 100%;
-            background-color: #00ADB5; /* Vibrant teal for progress bars */
+            background-color: var(--primary-color);
             transition: width 0.5s ease-in-out;
         }
+
+        /* Adjusted Neon Hover Effects in Dark Mode */
+        [data-theme="dark"] .navbar a:hover {
+            text-shadow: 0 0 5px var(--primary-color);
+        }
+
+        [data-theme="dark"] .portfolio-card a:hover {
+            text-shadow: 0 0 5px var(--primary-color);
+        }
+
         /* Responsive Styles */
         @media (max-width: 640px) {
             .navbar {
@@ -257,6 +423,7 @@
                 text-align: center;
             }
         }
+
         @media (max-width: 768px) {
             .about-section {
                 flex-direction: column;
@@ -287,17 +454,27 @@
     </style>
 </head>
 <body class="text-gray-800">
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+
     <!-- Navbar -->
     <nav class="navbar fixed top-0 w-full p-4 z-50">
         <div class="container mx-auto flex flex-wrap justify-between items-center">
             <a href="#home" class="text-2xl font-bold text-white">Samay Susumanth</a>
-            <div class="space-x-4 flex flex-wrap">
-                <a href="#home" class="text-white hover:text-[#00ADB5]">Home</a>
-                <a href="#about" class="text-white hover:text-[#00ADB5]">About</a>
-                <a href="#resume" class="text-white hover:text-[#00ADB5]">Resume</a>
-                <a href="#services" class="text-white hover:text-[#00ADB5]">Services</a>
-                <a href="#portfolio" class="text-white hover:text-[#00ADB5]">Portfolio</a>
-                <a href="#contact" class="text-white hover:text-[#00ADB5]">Contact</a>
+            <div class="flex items-center space-x-4">
+                <div class="space-x-4 flex flex-wrap">
+                    <a href="#home" class="text-white hover:text-[var(--primary-color)]">Home</a>
+                    <a href="#about" class="text-white hover:text-[var(--primary-color)]">About</a>
+                    <a href="#resume" class="text-white hover:text-[var(--primary-color)]">Resume</a>
+                    <a href="#services" class="text-white hover:text-[var(--primary-color)]">Services</a>
+                    <a href="#portfolio" class="text-white hover:text-[var(--primary-color)]">Portfolio</a>
+                    <a href="#contact" class="text-white hover:text-[var(--primary-color)]">Contact</a>
+                </div>
+                <div class="theme-toggle-container" onclick="toggleTheme()">
+                    <span class="sun-icon">☀️</span>
+                    <span class="moon-icon">🌙</span>
+                    <div class="theme-toggle-slider"></div>
+                </div>
             </div>
         </div>
     </nav>
@@ -376,16 +553,7 @@
                 <div class="md:w-2/3">
                     <div class="description-card">
                         <h3>About Me</h3>
-                       <!-- <p class="text-gray-600">Passionate about Software Development, with a Bachelor's in Computer Science and hands-on experience in Java, Spring Boot, JavaScript, and MySQL. Enhanced scalable applications, including an Hospital Management Application, emotion-based feedback analysis system, and an e-book platform. Certified in Meta Front-End Development and Spring Boot REST APIs. Eager to leverage technical expertise and problem-solving skills to contribute to innovative software solutions.</p>
-                    --> <p class="text-gray-600">Passionate and results-driven Software Developer with a Bachelor's degree in Computer Science Engineering, bringing hands-on experience in full-stack application development and a strong foundation in core computer science principles. <br><br>Proficient in Java, Spring Boot, JavaScript, React, HTML/CSS, and MySQL, with a deep understanding of Object-Oriented Programming (OOP), RESTful API development, and software design patterns.<br><br>
-
-                        Successfully led and contributed to multiple scalable projects including a Hospital Management System, Emotion-Based Feedback Analysis System, and an E-Book Zone platform. These projects highlight capabilities in real-time CRUD operations, data processing, integration of frontend-backend technologies, and user-centric design.<br><br>
-
-                        Certified in Meta Front-End Development (Coursera) and Spring Boot REST APIs, and completed an internship at KodNest, gaining practical, real-world experience in Java development, MySQL database design, API testing, and manual testing methodologies.<br><br>
-
-                        Strong problem-solving mindset with a focus on writing clean, efficient, and maintainable code. Adept at working in collaborative, agile-driven teams, with excellent communication skills and the ability to quickly learn and apply new technologies.<br><br><br>
-
-                        Actively exploring areas like Spring Security, and Cloud deployment, with the goal of becoming a proficient full-stack engineer. Eager to contribute to innovative, high-impact software solutions in a challenging and growth-oriented environment.</p>
+                        <p class="text-gray-600">Passionate and results-driven Software Developer with a Bachelor's degree in Computer Science Engineering, bringing hands-on experience in full-stack application development and a strong foundation in core computer science principles. <br><br>Proficient in Java, Spring Boot, JavaScript, React, HTML/CSS, and MySQL, with a deep understanding of Object-Oriented Programming (OOP), RESTful API development, and software design patterns.<br><br>Successfully led and contributed to multiple scalable projects including a Hospital Management System, Emotion-Based Feedback Analysis System, and an E-Book Zone platform. These projects highlight capabilities in real-time CRUD operations, data processing, integration of frontend-backend technologies, and user-centric design.<br><br>Certified in Meta Front-End Development (Coursera) and Spring Boot REST APIs, and completed an internship at KodNest, gaining practical, real-world experience in Java development, MySQL database design, API testing, and manual testing methodologies.<br><br>Strong problem-solving mindset with a focus on writing clean, efficient, and maintainable code. Adept at working in collaborative, agile-driven teams, with excellent communication skills and the ability to quickly learn and apply new technologies.<br><br>Actively exploring areas like Spring Security, and Cloud deployment, with the goal of becoming a proficient full-stack engineer. Eager to contribute to innovative, high-impact software solutions in a challenging and growth-oriented environment.</p>
                     </div>
                 </div>
             </div>
@@ -393,48 +561,77 @@
     </section>
 
     <!-- Resume Section -->
-    <section id="resume" class="py-16 bg-[#393E46]">
+    <section id="resume" class="py-16 bg-[var(--card-bg)]">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-4 section-title text-center text-white">Resume</h2>
+            <h2 class="text-3xl font-bold mb-4 section-title text-center text-[var(--card-text)]">Resume</h2>
             <div class="text-center mb-8">
-                <a href="SusumanthSamayResume.pdf" download class="bg-[#00ADB5] text-white px-6 py-2 rounded hover:bg-[#222831]">Download Resume</a>
+                <a href="SUSUMANTHSAMAY_resume.pdf" download class="bg-[var(--primary-color)] text-white px-6 py-2 rounded hover:bg-[var(--accent-color)]">Download Resume</a>
             </div>
             <div class="resume-section flex flex-col md:flex-row gap-8">
                 <div class="md:w-1/2 timeline">
                     <div class="timeline-item mb-6">
-                        <h3 class="text-xl font-semibold mb-2 text-white">Summary</h3>
-                        <p class="text-gray-300">Passionate Software Developer with a Bachelor’s in Computer Science and hands-on experience in Java, Spring Boot, JavaScript, and MySQL. Enhanced scalable applications, including a Hospital Management Application, emotion-based feedback analysis system, and an e-book platform.</p>
-                        <p class="text-gray-300"><strong>Location:</strong> Bangalore, Karnataka</p>
-                        <p class="text-gray-300"><strong>Email:</strong> samaysusumanth2@gmail.com</p>
-                        <p class="text-gray-300"><strong>Phone:</strong> +91 8985678373</p>
+                        <h3 class="text-xl font-semibold mb-2 text-[var(--card-text)]">Professional Summary</h3>
+                        <p class="text-[var(--card-text)]">Full Stack Developer with a Bachelor's in Computer Science and hands-on experience in Java, Python, PHP, Spring Boot, JavaScript, React, and MySQL. Enhanced scalable applications, including an emotion-based feedback analysis system that improved accuracy by 25%, Hospital Management Application, and an e-book platform. Certified in Meta Front-End Development and Spring Boot REST APIs. Skilled in AWS Cloud, Agile methodologies, manual testing, and full-stack development. Eager to leverage technical expertise and problem-solving skills to contribute to innovative software solutions.</p>
+                    </div>
+                    <div class="timeline-item mb-6">
+                        <h3 class="text-xl font-semibold mb-2 text-[var(--card-text)]">Technical Skills</h3>
+                        <ul class="list-disc ml-6 text-[var(--card-text)]">
+                            <li><strong>Programming Languages:</strong> Java, Python</li>
+                            <li><strong>Frameworks & Libraries:</strong> Spring Boot, Hibernate</li>
+                            <li><strong>Web Technologies:</strong> HTML, CSS, JavaScript</li>
+                            <li><strong>Databases:</strong> MySQL</li>
+                            <li><strong>Cloud:</strong> AWS Cloud (EC2, S3)</li>
+                            <li><strong>Tools & Methodologies:</strong> Git, Postman, GitHub, Bootstrap, Agile</li>
+                        </ul>
                     </div>
                     <div class="timeline-item">
-                        <h3 class="text-xl font-semibold mb-2 text-white">Education</h3>
-                        <p class="text-gray-300"><strong>Bachelor of Technology in Computer Science</strong></p>
-                        <p class="text-gray-300">Santhiram Engineering College, Nandyal, AP (Nov 2021 - May 2024)</p>
-                        <p class="text-gray-300">CGPA: 8.03/10</p>
-                        <p class="text-gray-300"><strong>Diploma in Mechanical Engineering</strong></p>
-                        <p class="text-gray-300">E. S. C Government Polytechnic, Nandyal, AP (Jun 2018 - May 2021)</p>
-                        <p class="text-gray-300">GPA: 75.6/100</p>
-                        <p class="text-gray-300"><strong>Secondary School Certificate (SSC)</strong></p>
-                        <p class="text-gray-300">Little Angels E.M High School (Jun 2017 - Apr 2018)</p>
-                        <p class="text-gray-300">GPA: 9.5/10</p>
+                        <h3 class="text-xl font-semibold mb-2 text-[var(--card-text)]">Education</h3>
+                        <p class="text-[var(--card-text)]"><strong>Bachelor of Technology in Computer Science</strong></p>
+                        <p class="text-[var(--card-text)]">Santhiram Engineering College, Nandyal, AP (Nov 2021 - May 2024)</p>
+                        <p class="text-[var(--card-text)]">CGPA: 8.03/10</p>
+                        <br>
+                        <p class="text-[var(--card-text)]"><strong>Diploma in Mechanical Engineering</strong></p>
+                        <p class="text-[var(--card-text)]">E. S. C Government Polytechnic, Nandyal, AP (Jun 2018 - May 2021)</p>
+                        <p class="text-[var(--card-text)]">GPA: 75.6/100</p>
+                        <br>
+                        <p class="text-[var(--card-text)]"><strong>Secondary School Certificate (SSC)</strong></p>
+                        <p class="text-[var(--card-text)]">Little Angels E.M High School (Jun 2017 - Apr 2018)</p>
+                        <p class="text-[var(--card-text)]">GPA: 9.5/10</p>
                     </div>
                 </div>
                 <div class="md:w-1/2 timeline">
                     <div class="timeline-item mb-6">
-                        <h3 class="text-xl font-semibold mb-2 text-white">Professional Experience</h3>
-                        <p class="text-gray-300"><strong>Software Development Intern, KodNest (Feb 2024 - Oct 2024)</strong></p>
-                        <ul class="list-disc ml-6 text-gray-300">
-                            <li>Developed Java-based applications using Spring Boot and MySQL.</li>
-                            <li>Gained hands-on experience in frontend development using JavaScript, HTML, and CSS to build responsive user interfaces.</li>
+                        <h3 class="text-xl font-semibold mb-2 text-[var(--card-text)]">Internship</h3>
+                        <p class="text-[var(--card-text)]"><strong>Software Development Intern, KodNest (Feb 2024 - Oct 2024)</strong></p>
+                        <ul class="list-disc ml-6 text-[var(--card-text)]">
+                            <li>Developed 2 Java-based applications using Spring Boot and MySQL, improving backend efficiency by 30%.</li>
+                            <li>Gained hands-on experience in frontend development using React, HTML, and CSS to build responsive user interfaces.</li>
                             <li>Contributed to real-world projects under the guidance of industry professionals, enhancing practical knowledge in full-stack development and software testing.</li>
                         </ul>
                     </div>
+                    <div class="timeline-item mb-6">
+                        <h3 class="text-xl font-semibold mb-2 text-[var(--card-text)]">Projects</h3>
+                        <p class="text-[var(--card-text)]"><strong>Emotion-Based Feedback Analysis System</strong> | Python, CNN, HTML, CSS, JavaScript, MySQL</p>
+                        <ul class="list-disc ml-6 text-[var(--card-text)]">
+                            <li>Developed a real-time emotion classification system for E-learning contexts.</li>
+                            <li>Trained a CNN model to classify user feedback emotions, boosting accuracy by 25%.</li>
+                        </ul>
+                        <br>
+                        <p class="text-[var(--card-text)]"><strong>Hospital Management System (HMS)</strong> | Java, Spring Boot, MySQL, HTML/CSS, REST APIs, JavaScript</p>
+                        <ul class="list-disc ml-6 text-[var(--card-text)]">
+                            <li>A web-based system for managing patient records, doctor schedules, and appointments efficiently.</li>
+                            <li>It enables patients to book appointments, helps doctors access records, and includes a rule-based chatbot for doctor suggestions and possible diagnoses.</li>
+                        </ul>
+                        <br>
+                        <p class="text-[var(--card-text)]"><strong>E-Book Zone</strong> | HTML, CSS, JavaScript, Bootstrap, Git</p>
+                        <ul class="list-disc ml-6 text-[var(--card-text)]">
+                            <li>Developed a responsive e-book platform using HTML5, CSS3, and JavaScript, featuring dynamic search filters and a user-friendly interface for seamless book discovery.</li>
+                        </ul>
+                    </div>
                     <div class="timeline-item">
-                        <h3 class="text-xl font-semibold mb-2 text-white">Certifications</h3>
-                        <p class="text-gray-300">Meta Front-End Developer, Coursera (Mar 2024)</p>
-                        <p class="text-gray-300">Spring Boot: REST APIs & Microservices, Udemy (Nov 2024)</p>
+                        <h3 class="text-xl font-semibold mb-2 text-[var(--card-text)]">Certifications</h3>
+                        <p class="text-[var(--card-text)]">Meta Front-End Developer, Coursera (Mar 2024)</p>
+                        <p class="text-[var(--card-text)]">Spring Boot: REST APIs & Microservices, Udemy (Nov 2024)</p>
                     </div>
                 </div>
             </div>
@@ -442,32 +639,31 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-16 bg-[#393E46]">
+    <section id="services" class="py-16 bg-[var(--card-bg)]">
         <div class="container mx-auto text-center px-4">
-            <h2 class="text-3xl font-bold mb-4 section-title text-white">Services</h2>
+            <h2 class="text-3xl font-bold mb-4 section-title text-[var(--card-text)]">Services</h2>
             <div class="services-grid grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
                 <div class="p-6 border rounded-lg shadow-lg service-card">
                     <div class="flex justify-center mb-4">
                         <span class="blue-icon text-4xl">💻</span>
                     </div>
                     <h3 class="text-xl font-semibold mb-2">Java Development</h3>
-                    <p>Building robust backend applications using Java, Spring Boot, and Hibernate.</p>
+                    <p class="text-[var(--card-text)]">Building robust backend applications using Java, Spring Boot, and Hibernate.</p>
                 </div>
                 <div class="p-6 border rounded-lg shadow-lg service-card">
                     <div class="flex justify-center mb-4">
                         <span class="blue-icon text-4xl">🌐</span>
                     </div>
                     <h3 class="text-xl font-semibold mb-2">Full-Stack Development</h3>
-                    <p>Creating responsive web applications with React, JavaScript, HTML, and CSS.</p>
+                    <p class="text-[var(--card-text)]">Creating responsive web applications with React, JavaScript, HTML, and CSS.</p>
                 </div>
                 <div class="p-6 border rounded-lg shadow-lg service-card">
                     <div class="flex justify-center mb-4">
                         <span class="blue-icon text-4xl">🗄️</span>
                     </div>
                     <h3 class="text-xl font-semibold mb-2">Database Management</h3>
-                    <p>Designing and managing databases with MySQL for efficient data handling.</p>
+                    <p class="text-[var(--card-text)]">Designing and managing databases with MySQL for efficient data handling.</p>
                 </div>
-                
             </div>
         </div>
     </section>
@@ -481,27 +677,27 @@
                     <img src="hms.jpeg" alt="Hospital Management System">
                     <div class="p-4">
                         <h3 class="text-xl font-semibold mb-2">
-                            <a href="/hospital-management-system" class="text-white hover:underline">Hospital Management System</a>
+                            <a href="/hospital-management-system" class="text-[var(--card-text)] hover:underline">Hospital Management System</a>
                         </h3>
-                        <p>A web-based system for managing patient records, doctor schedules, and appointments efficiently using Java, Spring Boot, MySQL, and REST APIs.</p>
+                        <p class="text-[var(--card-text)]">A web-based system for managing patient records, doctor schedules, and appointments efficiently using Java, Spring Boot, MySQL, and REST APIs.</p>
                     </div>
                 </div>
                 <div class="portfolio-card border rounded-lg shadow-lg overflow-hidden">
                     <img src="bookzone.jpeg" alt="E-Book Zone">
                     <div class="p-4">
                         <h3 class="text-xl font-semibold mb-2">
-                            <a href="/e-book-zone" class="text-white hover:underline">E-Book Zone</a>
+                            <a href="/e-book-zone" class="text-[var(--card-text)] hover:underline">E-Book Zone</a>
                         </h3>
-                        <p>A responsive e-book platform with dynamic search filters, built using HTML, CSS, JavaScript, and Bootstrap.</p>
+                        <p class="text-[var(--card-text)]">A responsive e-book platform with dynamic search filters, built using HTML, CSS, JavaScript, and Bootstrap.</p>
                     </div>
                 </div>
                 <div class="portfolio-card border rounded-lg shadow-lg overflow-hidden">
                     <img src="elearning.jpeg" alt="Emotion-Based Feedback Analysis">
                     <div class="p-4">
                         <h3 class="text-xl font-semibold mb-2">
-                            <a href="/emotion-feedback-system" class="text-white hover:underline">Emotion-Based Feedback Analysis</a>
+                            <a href="/emotion-feedback-system" class="text-[var(--card-text)] hover:underline">Emotion-Based Feedback Analysis</a>
                         </h3>
-                        <p>A real-time emotion classification system for E-learning, using Python, CNN, and MySQL.</p>
+                        <p class="text-[var(--card-text)]">A real-time emotion classification system for E-learning, using Python, CNN, and MySQL.</p>
                     </div>
                 </div>
             </div>
@@ -509,23 +705,23 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-16 bg-[#393E46]">
+    <section id="contact" class="py-16 bg-[var(--card-bg)]">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-4 section-title text-center text-white">Get in Touch</h2>
+            <h2 class="text-3xl font-bold mb-4 section-title text-center text-[var(--card-text)]">Get in Touch</h2>
             <div class="contact-section flex flex-col md:flex-row gap-8">
                 <div class="md:w-1/2">
-                    <h3 class="text-xl font-semibold mb-4 text-white">Contact Information</h3>
+                    <h3 class="text-xl font-semibold mb-4 text-[var(--card-text)]">Contact Information</h3>
                     <div class="contact-info-item">
                         <span class="blue-icon text-2xl">📍</span>
-                        <p class="text-gray-300">Bangalore, Karnataka</p>
+                        <p class="text-[var(--card-text)]">Bangalore, Karnataka</p>
                     </div>
                     <div class="contact-info-item">
                         <span class="blue-icon text-2xl">📞</span>
-                        <p class="text-gray-300">+91 8985678373</p>
+                        <p class="text-[var(--card-text)]">+91 8985678373</p>
                     </div>
                     <div class="contact-info-item">
                         <span class="blue-icon text-2xl">✉️</span>
-                        <p class="text-gray-300">samaysusumanth2@gmail.com</p>
+                        <p class="text-[var(--card-text)]">samaysusumanth2@gmail.com</p>
                     </div>
                     <div class="mt-6">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248849.886436062!2d77.46612667214974!3d12.953997022847155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfcfe367f7b463!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1697891234567!5m2!1sen!2sin" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
@@ -549,7 +745,9 @@
                             <span>💬</span>
                             <textarea placeholder="Message" class="w-full p-2 rounded" rows="4"></textarea>
                         </div>
-                        <button class="bg-[#00ADB5] text-white px-6 py-2 rounded hover:bg-[#222831] w-full">Send Message</button>
+                        <button type="button" id="send-message" class="bg-[var(--primary-color)] text-white px-6 py-2 rounded hover:bg-[var(--accent-color)] w-full">Send Message</button>
+                        <p id="success-message" class="hidden mt-2 text-green-400">Message sent successfully!</p>
+                        <p id="error-message" class="hidden mt-2 text-red-400">Failed to send message. Please try again.</p>
                     </div>
                 </div>
             </div>
@@ -557,21 +755,62 @@
     </section>
 
     <!-- Footer -->
-     <footer>
-    <p>Connect with us:</p>
-  </footer>
     <footer class="py-8 text-center">
         <div class="flex justify-center space-x-6 mb-4 flex-wrap">
-            <a href="https://www.linkedin.com/in/susumanth" target="www.linkedin.com/in/susumanth"><span class="blue-icon text-2xl"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" class="footer-icon"></span></a>
-            <a href="https://github.com/SusumanthSamay" target="https://github.com/SusumanthSamay"><span class="blue-icon text-2xl"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" class="footer-icon"></span></a>
+            <a href="https://www.linkedin.com/in/susumanth" target="_blank"><span class="blue-icon text-2xl"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" class="footer-icon"></span></a>
+            <a href="https://github.com/SusumanthSamay" target="_blank"><span class="blue-icon text-2xl"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" class="footer-icon"></span></a>
             <a href="https://www.facebook.com/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" class="footer-icon"></a>
             <a href="mailto:samaysusumanth2@gmail.com"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email" class="footer-icon"></a>
-
         </div>
         <p>© 2025 Samay Susumanth. All Rights Reserved.</p>
     </footer>
 
+    <!-- Add EmailJS Script -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init('_bXzx9yIjdCMXAVKY');
+        })();
+    </script>
+
     <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute("data-theme");
+            const newTheme = currentTheme === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", newTheme);
+            localStorage.setItem("theme", newTheme);
+            const toggleContainer = document.querySelector(".theme-toggle-container");
+            toggleContainer.setAttribute("data-theme", newTheme);
+        }
+
+        // Load saved theme
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedTheme = localStorage.getItem("theme") || "light";
+            document.documentElement.setAttribute("data-theme", savedTheme);
+            const toggleContainer = document.querySelector(".theme-toggle-container");
+            toggleContainer.setAttribute("data-theme", savedTheme);
+        });
+
+        // Cursor Animation
+        const cursor = document.querySelector(".custom-cursor");
+        document.addEventListener("mousemove", (e) => {
+            gsap.to(cursor, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.1,
+                ease: "power2.out"
+            });
+        });
+
+        // Hover effects for cursor
+        const hoverables = document.querySelectorAll("a, button, .service-card, .portfolio-card, .theme-toggle-container");
+        hoverables.forEach((el) => {
+            el.addEventListener("mouseenter", () => cursor.classList.add("hovered"));
+            el.addEventListener("mouseleave", () => cursor.classList.remove("hovered"));
+        });
+
+        // Typing effect
         const roles = ["Software Developer", "Backend Developer", "Full Stack Developer"];
         let roleIndex = 0;
         let charIndex = 0;
@@ -601,6 +840,37 @@
         }
 
         typeRole();
+
+        // Contact form submission
+        document.getElementById('send-message').addEventListener('click', function() {
+            const form = document.querySelector('.contact-form');
+            const name = form.querySelector('input[type="text"]').value;
+            const email = form.querySelector('input[type="email"]').value;
+            const subject = form.querySelectorAll('input[type="text"]')[1].value;
+            const message = form.querySelector('textarea').value;
+
+            emailjs.send('service_zdqibgf', 'template_iiysbnw', {
+                from_name: name,
+                from_email: email,
+                subject: subject,
+                message: message
+            })
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                document.getElementById('success-message').classList.remove('hidden');
+                document.getElementById('error-message').classList.add('hidden');
+                form.reset();
+                setTimeout(() => {
+                    document.getElementById('success-message').classList.add('hidden');
+                }, 5000);
+            }, function(error) {
+                console.log('FAILED...', error);
+                document.getElementById('error-message').classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('error-message').classList.add('hidden');
+                }, 5000);
+            });
+        });
     </script>
 </body>
 </html>
